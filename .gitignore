@@ -1,2 +1,20 @@
-# Project exclude paths
-/.venv/
+# Virtual environment
+.venv/
+venv/
+
+# Environment variables
+.env
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# IDE
+.idea/
+.vscode/
+
+# macOS
+.DS_Store
+
+# Generated files
+*.log
