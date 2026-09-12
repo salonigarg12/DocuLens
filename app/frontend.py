@@ -15,7 +15,9 @@ API_URL = os.getenv(
 
 TOKEN_COOKIE_NAME = "doculens_access_token"
 
-REQUEST_TIMEOUT = 120
+REQUEST_TIMEOUT = 10
+AI_REQUEST_TIMEOUT = 120
+UPLOAD_TIMEOUT = 300
 
 
 # ── Streamlit page configuration ──────────────────────────────────────────────
@@ -228,7 +230,8 @@ def api_request(
 
     except requests.Timeout:
         st.error(
-            "The request took too long. Please try again."
+            "The request took longer than 45 seconds. "
+            "Gemini may be busy, so please try again."
         )
         return None
 
@@ -470,7 +473,7 @@ def upload_pdf(
         method="POST",
         endpoint=f"/chats/{chat_id}/upload",
         files=files,
-        timeout=300,
+        timeout=UPLOAD_TIMEOUT,
     )
 
     if response is None:
@@ -495,7 +498,7 @@ def ask_question(
         json={
             "question": question,
         },
-        timeout=300,
+        timeout=AI_REQUEST_TIMEOUT,
     )
 
     if response is None:
@@ -516,7 +519,7 @@ def generate_summary(
     response = api_request(
         method="POST",
         endpoint=f"/chats/{chat_id}/summary",
-        timeout=300,
+        timeout=AI_REQUEST_TIMEOUT,
     )
 
     if response is None:
@@ -1155,7 +1158,8 @@ def render_chat_screen(
 
     if summary_clicked:
         with st.spinner(
-            "Generating document summary..."
+            "Gemini is generating the document summary. "
+            "This may take up to 45 seconds..."
         ):
             summary_result = generate_summary(
                 chat_id=chat_id,
@@ -1221,8 +1225,8 @@ def render_chat_screen(
 
         with st.chat_message("assistant"):
             with st.spinner(
-                "Searching the PDF and "
-                "generating an answer..."
+                "Searching the PDF and waiting for Gemini. "
+                "This may take up to 45 seconds..."
             ):
                 result = ask_question(
                     chat_id=chat_id,

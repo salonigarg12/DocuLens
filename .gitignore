@@ -1,23 +1,24 @@
-# Virtual environment
+# Virtual environments
 .venv/
-venv/
+**/venv/
+**/.venv/
 
-# Environment variables
-.env
+# Environment variables anywhere in the repo
+**/.env
+.env*
+!.env.example
 
-# Python cache
-__pycache__/
+# Local archives
+*.zip
+
+# Generated storage and uploads
+**/storage/
+**/uploads/
+
+# Python cache & OS files
+**/__pycache__/
 *.py[cod]
-
-# IDE
+.DS_Store
+**/.DS_Store
 .idea/
 .vscode/
-
-# macOS
-.DS_Store
-
-# Generated files
-*.log
-
-storage/
-uploads/

@@ -1,32 +1,27 @@
 import os
 from pathlib import Path
-
 from dotenv import load_dotenv
 
-
-# Load environment variables from .env
-load_dotenv()
-
-
 # -----------------------------------------------------------------------------
-# Project paths
+# Project paths & environment loading
 # -----------------------------------------------------------------------------
 
+# Points to the directory containing app/, uploads/, storage/, and .env
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-UPLOAD_DIR = BASE_DIR / "uploads"
+# Load environment variables explicitly from the project's .env file
+load_dotenv(dotenv_path=BASE_DIR / ".env")
 
+UPLOAD_DIR = BASE_DIR / "uploads"
 STORAGE_DIR = BASE_DIR / "storage"
 CHUNKS_DIR = STORAGE_DIR / "chunks"
 INDEXES_DIR = STORAGE_DIR / "indexes"
-
 
 # Create required folders automatically
 UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
 STORAGE_DIR.mkdir(parents=True, exist_ok=True)
 CHUNKS_DIR.mkdir(parents=True, exist_ok=True)
 INDEXES_DIR.mkdir(parents=True, exist_ok=True)
-
 
 # -----------------------------------------------------------------------------
 # Database
@@ -36,7 +31,6 @@ DATABASE_URL = os.getenv(
     "DATABASE_URL",
     "mysql+pymysql://root:password@localhost/doculens",
 )
-
 
 # -----------------------------------------------------------------------------
 # JWT authentication
@@ -59,7 +53,6 @@ ACCESS_TOKEN_EXPIRE_DAYS = int(
     )
 )
 
-
 # -----------------------------------------------------------------------------
 # Gemini configuration
 # -----------------------------------------------------------------------------
@@ -79,7 +72,6 @@ EMBEDDING_MODEL_NAME = os.getenv(
     "sentence-transformers/all-MiniLM-L6-v2",
 )
 
-
 # -----------------------------------------------------------------------------
 # PDF upload settings
 # -----------------------------------------------------------------------------
@@ -90,7 +82,6 @@ MAX_FILE_SIZE = int(
         str(10 * 1024 * 1024),
     )
 )
-
 
 # -----------------------------------------------------------------------------
 # Text chunking
@@ -110,7 +101,6 @@ CHUNK_OVERLAP = int(
     )
 )
 
-
 # -----------------------------------------------------------------------------
 # Retrieval
 # -----------------------------------------------------------------------------
@@ -128,7 +118,6 @@ MAX_CONTEXT_LENGTH = int(
         "12000",
     )
 )
-
 
 # -----------------------------------------------------------------------------
 # Summary
