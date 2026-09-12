@@ -18,3 +18,7 @@ transformers
 faiss-cpu
 google-genai
 google-api-python-client
+PyJWT
+pwdlib[argon2]
+passlib[bcrypt]
+bcrypt==4.0.1
