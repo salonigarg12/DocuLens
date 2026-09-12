@@ -4,7 +4,9 @@ sqlalchemy
 pymysql
 cryptography
 python-dotenv
-pydantic
+pydantic[email]
+pydantic-settings
+email-validator
 python-multipart
 python-magic
 requests
@@ -20,5 +22,6 @@ google-genai
 google-api-python-client
 PyJWT
 pwdlib[argon2]
+argon2-cffi
 passlib[bcrypt]
 bcrypt==4.0.1
