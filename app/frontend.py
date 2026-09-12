@@ -8,10 +8,15 @@ from streamlit_cookies_controller import CookieController
 
 # ── Configuration ─────────────────────────────────────────────────────────────
 
-API_URL = os.getenv(
-    "DOCULENS_API_URL",
-    "http://127.0.0.1:8000",
-).rstrip("/")
+def resolve_api_url() -> str:
+    try:
+        if "DOCULENS_API_URL" in st.secrets:
+            return st.secrets["DOCULENS_API_URL"].rstrip("/")
+    except Exception:
+        pass
+    return os.getenv("DOCULENS_API_URL", "http://127.0.0.1:8000").rstrip("/")
+
+API_URL = resolve_api_url()
 
 TOKEN_COOKIE_NAME = "doculens_access_token"
 
